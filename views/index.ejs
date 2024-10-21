@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página principal</title>
+    <link rel="stylesheet" href="/global.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="bodyClass">
+    <main>
+        <div class="btnsInicio">
+            <input class="btn btn-primary" type="button" value="Agregar producto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <input class="btn btn-primary" type="button" value="Listar categoria">
+        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Editar</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <% rows.forEach(item => { %>
+                    <tr>
+                        <th scope="row">PDA62-00<%= item.idp %></th>
+                        <td><%= item.name_p %></td>
+                        <td>$<%= item.price %></td>
+                        <td><%= item.name_c %></td>
+                        <td>
+                            <button class="btn"
+                                data-bs-toggle="modal" data-bs-target="#editarProducto"
+                                data-id="<%= item.idp %>" 
+                                data-name="<%= item.name_p %>" 
+                                data-price="<%= item.price %>" 
+                                data-idCategory="<%= item.idc %>">
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit editar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/><path d="M16 5l3 3" /></svg>
+                            </button>
+                            <button class="btn">
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash basura"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                            </button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <form method="post">
+            <div class="modal fade" id="editarProducto" tabindex="-1" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="idProduct" id="idProduct">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio</label>
+                                <input type="text" class="form-control" id="price" name="price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_spct" class="form-label">Categoria</label>
+                                <select class="form-select" id="id_spct" name="id_spct" required>
+                                    <option selected>Seleccionar categoria</option>
+                                    <% categories.forEach(item => { %>
+                                        <option value="<%= categories.idc %>"><%= item.name_c%></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form action="/product/addProduct" method="post">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body
+                        ">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio</label>
+                                <input type="text" class="form-control" id="price" name="price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_spct" class="form-label">Categoria</label>
+                                <select class="form-select" id="id_spct" name="id_spct" required>
+                                    <option selected>Seleccionar categoria</option>
+                                    <% rows.forEach(item => { %>
+                                        <option value="<%= item.idc %>"><%= item.name_c%></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </main>
+    <script>
+        const editarProductoModal = document.getElementById('editarProducto');
+    
+        const form = editarProductoModal.querySelector('form');
+        editarProductoModal.addEventListener('show.bs.modal', (event) => {
+
+            const button = event.relatedTarget;
+    
+            const productId = button.getAttribute('data-id');
+            const productName = button.getAttribute('data-name');
+            const productPrice = button.getAttribute('data-price');
+            const productCategory = button.getAttribute('data-idCategory');
+    
+            const nameInput = document.getElementById('name');
+            const priceInput = document.getElementById('price');
+            const categorySelect = document.getElementById('id_spct');
+    
+            nameInput.value = productName;
+            priceInput.value = productPrice;
+            categorySelect.value = productCategory;
+
+            form.action = `/product/editProduct?idProduct=${productId}`;
+        });
+        
+        
+    </script>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
