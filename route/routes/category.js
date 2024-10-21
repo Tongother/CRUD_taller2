@@ -9,13 +9,11 @@ const db = require("../../dbconnection");
 Router.get('/', (req, res) => {
     const sql = "SELECT * from category";
     db.query(sql, (err, rows) => {
-        console.log(rows);
         if (err) throw err;
         res.render('category', {
             title: 'E-com Relation',
             rows: rows
         });
-
     })
 
 });
@@ -23,15 +21,6 @@ Router.get('/', (req, res) => {
 
 
 // ================================= add category ================================
-
-
-Router.get('/addCategory', (req, res) => {
-
-    res.render('addCategory', {
-        title: 'Add Category',
-    });
-
-});
 
 Router.post("/addCategory", (req, res) => {
 
@@ -42,8 +31,8 @@ Router.post("/addCategory", (req, res) => {
         if (err) {
             return res.status(500).send(err);
         }
+        res.redirect('/category');
     });
-    res.render('addCategory');
 });
 
 
@@ -68,7 +57,7 @@ Router.post("/editCategory/:idCategory", (req, res) => {
     let name = req.body.name_c;
 
 
-    let query = "UPDATE `category` SET `name_c` = '" + name + "' WHERE `category`.`idc` = '" + idCategory + "'";
+    let query = "UPDATE `category` SET `name_c` = '" + name + "' WHERE `idc` = '" + idCategory + "'";
     db.query(query, (err, result) => {
         if (err) {
             return res.status(500).send(err);

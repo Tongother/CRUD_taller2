@@ -33,8 +33,8 @@ app.use("/product",productRoutes);
 
 
 app.get('/', (req, res) => {
-  const productQuery = "SELECT * FROM product INNER JOIN category WHERE product.category = category.idc";
-  const categoryQuery = "SELECT name_c FROM category";
+  const productQuery = "SELECT * FROM product INNER JOIN category WHERE category = category.idc";
+  const categoryQuery = "SELECT * FROM category";
 
   Promise.all([
       new Promise((resolve, reject) => {

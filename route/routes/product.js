@@ -12,8 +12,6 @@ Router.post("/addProduct", (req, res) => {
     let product_price = req.body.price;
     let product_category = req.body.id_spct;
 
-    console.log(req.body);
-
     // let query = "INSERT INTO `category` (name_c) VALUES ('" + category_name + "')";
 
     let query = "INSERT INTO `product` (name_p, price, category) VALUES ('" +product_name + "', '" + product_price + "', '" + product_category + "')";
@@ -65,8 +63,8 @@ Router.post("/editProduct/:idProduct", (req, res) => {
         if (err) {
             return res.status(500).send(err);
         }
+        res.redirect('/');
     });
-
 });
 
 // ================================= delete category ================================
@@ -75,13 +73,14 @@ Router.post("/editProduct/:idProduct", (req, res) => {
 Router.get("/deleteProduct/:idProduct", (req, res) => {
 
     let idProduct = req.params.idProduct;
-   
+
     let query = 'DELETE FROM product WHERE idp = "' + idProduct + '"';
 
     db.query(query, (err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
+        console.log(result);
         res.redirect('/');
     });
 
